@@ -2,12 +2,21 @@ const express = require('express');
 const cors = require('cors');
 const admin = require('firebase-admin');
 const app = express();
+require('dotenv').config();
 
 // Initialize Firebase Admin SDK
 const serviceAccount = require('./serviceAccountKey.json');
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'), // Fixes newline issue in private key
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    }),
+  });
+
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount)
+// });
 const db = admin.firestore();
 
 // Enable CORS

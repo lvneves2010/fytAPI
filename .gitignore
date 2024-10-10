@@ -76,3 +76,6 @@ yarn-error.log
 
 #firebase Keys
 serviceAccountKey.json
+
+#environment variables
+.env
